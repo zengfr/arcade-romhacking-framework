@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+6445876e685d1625a9309aabdca923eb C:/Users/zengfr/Desktop/c/test/src/proj/punisher/patch.S

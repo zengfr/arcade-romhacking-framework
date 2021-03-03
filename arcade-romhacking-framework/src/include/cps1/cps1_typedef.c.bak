@@ -1,0 +1,318 @@
+//=============================================================================================================================================================================================================================:
+#include <stdlib>
+//=============================================================================================================================================================================================================================:
+#define FALSE                                                   0
+#define TRUE                                                    1
+//=============================================================================================================================================================================================================================:
+#define U8                                                      unsigned char
+#define U16                                                     unsigned short
+#define U32                                                     unsigned int
+//=============================================================================================================================================================================================================================:
+typedef struct
+{
+    U16 x;     // x����
+    U16 y;     // y����
+    U16 ID;
+    U16 Index; //
+    U16 time;  // �ɶ�
+    U16 action;
+    U16 action1;
+    U16 speed;
+} SPRITE_STRUCT;
+//=============================================================================================================================================================================================================================:
+#define SPRITE_OBJ00                                            0x00FF0100
+#define SPRITE_OBJ01                                            0x00FF0200
+#define SPRITE_OBJ02                                            0x00FF0300
+#define SPRITE_OBJ03                                            0x00FF0400
+#define SPRITE_OBJ04                                            0x00FF0500
+#define SPRITE_OBJ05                                            0x00FF0600
+#define SPRITE_OBJ06                                            0x00FF0700
+#define SPRITE_OBJ07                                            0x00FF0800
+#define SPRITE_OBJ08                                            0x00FF0900
+#define SPRITE_OBJ09                                            0x00FF0A00
+#define SPRITE_OBJ10                                            0x00FF0B00
+//=============================================================================================================================================================================================================================:
+#define SPRITE_RAM0                                             0x00900000
+#define SPRITE_RAM1                                             0x00908000
+#define PALETTE_SPRITE                                          0x00914000
+#define PALETTE_BG08                                            0x00914400
+#define PALETTE_BG16                                            0x00914800
+#define PALETTE_BG32                                            0x00914C00
+//=============================================================================================================================================================================================================================:
+#define COLOR_RGB(r,g,b)                                        (0xF000|(((r/16)&0x0F)<<8)|(((g/16)&0x0F)<<4)|(((b/16)&0x0F)<<0))
+//=============================================================================================================================================================================================================================:
+const U16 Palette1[] =
+{
+    COLOR_RGB ( 255, 255, 255 ), /*00*/
+    COLOR_RGB ( 113,  93,  44 ), /*01*/
+    COLOR_RGB ( 255, 162, 136 ), /*02*/
+    COLOR_RGB ( 255, 196, 136 ), /*03*/
+    COLOR_RGB ( 255, 221, 220 ), /*04*/
+    COLOR_RGB ( 0,  16,  64 ),   /*05*/
+    COLOR_RGB ( 0,  55, 121 ),   /*06*/
+    COLOR_RGB ( 31, 106, 169 ),  /*07*/
+    COLOR_RGB ( 67, 128, 146 ),  /*08*/
+    COLOR_RGB ( 100,   0,   0 ), /*09*/
+    COLOR_RGB ( 255,   0,   0 ), /*0A*/
+    COLOR_RGB ( 255, 100,   0 ), /*0B*/
+    COLOR_RGB ( 64,  64,  64 ),  /*0C*/
+    COLOR_RGB ( 128, 128, 128 ), /*0D*/
+    COLOR_RGB ( 200, 200, 200 ), /*0E*/
+    COLOR_RGB ( 128,   0, 128 ), /*0F*/
+};
+//=============================================================================================================================================================================================================================:
+const U16 Palette2[] =
+{
+    COLOR_RGB ( 255, 255, 255 ), /*00*/
+    COLOR_RGB ( 113,  93,  44 ), /*01*/
+    COLOR_RGB ( 255, 162, 136 ), /*02*/
+    COLOR_RGB ( 255, 196, 136 ), /*03*/
+    COLOR_RGB ( 255, 221, 220 ), /*04*/
+    COLOR_RGB ( 0,  16,  64 ),   /*05*/
+    COLOR_RGB ( 0,  55, 121 ),   /*06*/
+    COLOR_RGB ( 31, 106, 169 ),  /*07*/
+    COLOR_RGB ( 67, 128, 146 ),  /*08*/
+    COLOR_RGB ( 0, 100,   0 ),   /*09*/
+    COLOR_RGB ( 0, 255,   0 ),   /*0A*/
+    COLOR_RGB ( 0, 255, 100 ),   /*0B*/
+    COLOR_RGB ( 64,  64,  64 ),  /*0C*/
+    COLOR_RGB ( 128, 128, 128 ), /*0D*/
+    COLOR_RGB ( 200, 200, 200 ), /*0E*/
+    COLOR_RGB ( 128,   0, 128 ), /*0F*/
+};
+//=============================================================================================================================================================================================================================:
+const U16 Palette3[] =
+{
+    COLOR_RGB ( 255, 255, 255 ), /*00*/
+    COLOR_RGB ( 113,  93,  44 ), /*01*/
+    COLOR_RGB ( 255, 162, 136 ), /*02*/
+    COLOR_RGB ( 255, 196, 136 ), /*03*/
+    COLOR_RGB ( 255, 221, 220 ), /*04*/
+    COLOR_RGB ( 0,  16,  64 ),   /*05*/
+    COLOR_RGB ( 0,  55, 121 ),   /*06*/
+    COLOR_RGB ( 31, 106, 169 ),  /*07*/
+    COLOR_RGB ( 67, 128, 146 ),  /*08*/
+    COLOR_RGB ( 100, 100,   0 ), /*09*/
+    COLOR_RGB ( 255, 255,   0 ), /*0A*/
+    COLOR_RGB ( 255, 255, 100 ), /*0B*/
+    COLOR_RGB ( 64,  64,  64 ),  /*0C*/
+    COLOR_RGB ( 128, 128, 128 ), /*0D*/
+    COLOR_RGB ( 200, 200, 200 ), /*0E*/
+    COLOR_RGB ( 128,   0, 128 ), /*0F*/
+};
+//=============================================================================================================================================================================================================================:
+void Load_PALETTE_SPRITE ( U8 Index, U16 *Palette, U8 size )
+{
+    volatile U16 *pw = PALETTE_SPRITE + ( Index * 0x20 ) ;
+
+    while ( size != 0x00 )
+    {
+        ( *pw++ ) = ( *Palette++ );
+        size--;
+    }
+}
+//=============================================================================================================================================================================================================================:
+const U16 ACTION_Wait[] =
+{
+    0x3800, 0x7300,
+    0x3900, 0x7300,
+    0x3A00, 0x7300,
+    0x3B00, 0x7300,
+    0x3C00, 0x7300,
+    0x3D00, 0x7300,
+    0x3E00, 0x7300,
+    0x3F00, 0x7300,
+    0x0000, 0x0000,
+};
+//=============================================================================================================================================================================================================================:
+const U16 ACTION_Walk[] =
+{
+    0x3805, 0x7300,
+    0x3905, 0x7300,
+    0x3A05, 0x7300,
+    0x3B05, 0x7300,
+    0x3C05, 0x7300,
+    0x3D05, 0x7300,
+    0x3E05, 0x7300,
+    0x0000, 0x0000,
+};
+//=============================================================================================================================================================================================================================:
+void Set_SPRITE ( U8 Index, SPRITE_STRUCT *sprite )
+{
+    volatile U16 *pw = SPRITE_RAM0 + ( Index * 0x08 ) ;
+    U16 _data = 0;
+
+    if ( sprite->time >= sprite->speed )
+    {
+        sprite->time = 0;
+        ( *pw++ ) = sprite->x;
+        ( *pw++ ) = sprite->y;
+
+        if ( sprite->action == 0 )
+        {
+            if ( ACTION_Wait[sprite->action1 * 2 + 0] == 0x0000 )
+            {
+                sprite->action1 = 0;
+            }
+
+            _data = ACTION_Wait[sprite->action1 * 2 + 0];
+            ( *pw++ ) = _data;
+            _data = ACTION_Wait[sprite->action1 * 2 + 1];
+            _data = _data | sprite->Index;
+            ( *pw++ ) = _data;
+        }
+        else
+        {
+            if ( ACTION_Walk[sprite->action1 * 2 + 0] == 0x0000 )
+            {
+                sprite->action1 = 0;
+            }
+
+            _data = ACTION_Walk[sprite->action1 * 2 + 0];
+            ( *pw++ ) = _data;
+            _data = ACTION_Wait[sprite->action1 * 2 + 1];
+            _data = _data | sprite->Index;
+            ( *pw++ ) = _data;
+        }
+
+        sprite->action1++;
+    }
+    else
+    {
+        sprite->time++;
+    }
+    return;
+}
+//=============================================================================================================================================================================================================================:
+void testfunction ( void )
+{
+    Load_PALETTE_SPRITE ( 0x01, Palette1, sizeof ( Palette1 ) );
+    Load_PALETTE_SPRITE ( 0x02, Palette2, sizeof ( Palette2 ) );
+    Load_PALETTE_SPRITE ( 0x03, Palette3, sizeof ( Palette3 ) );
+    SPRITE_STRUCT *sprite;
+    sprite = SPRITE_OBJ00;
+    sprite->x = 0x0058;
+    sprite->y = 0x005C;
+    sprite->ID = 0;
+    sprite->Index = 0x02;
+    sprite->time = 0x0080;
+    sprite->action = 1;
+    sprite->action1 = 0;
+    sprite->speed = 0x0200;
+    Set_SPRITE ( 1, SPRITE_OBJ00 );
+    sprite = SPRITE_OBJ01;
+    sprite->x = 0x007C;
+    sprite->y = 0x004C;
+    sprite->ID = 0;
+    sprite->Index = 0x01;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0110;
+    Set_SPRITE ( 2, SPRITE_OBJ01 );
+    sprite = SPRITE_OBJ02;
+    sprite->x = 0x00BC;
+    sprite->y = 0x004C;
+    sprite->ID = 0;
+    sprite->Index = 0x01;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0120;
+    Set_SPRITE ( 3, SPRITE_OBJ02 );
+    sprite = SPRITE_OBJ03;
+    sprite->x = 0x00FC;
+    sprite->y = 0x004C;
+    sprite->ID = 0;
+    sprite->Index = 0x21;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0130;
+    Set_SPRITE ( 4, SPRITE_OBJ03 );
+    sprite = SPRITE_OBJ04;
+    sprite->x = 0x013C;
+    sprite->y = 0x004C;
+    sprite->ID = 0;
+    sprite->Index = 0x21;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0140;
+    Set_SPRITE ( 5, SPRITE_OBJ04 );
+    sprite = SPRITE_OBJ05;
+    sprite->x = 0x006C;
+    sprite->y = 0x003C;
+    sprite->ID = 0;
+    sprite->Index = 0x03;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0150;
+    Set_SPRITE ( 6, SPRITE_OBJ05 );
+    sprite = SPRITE_OBJ06;
+    sprite->x = 0x00AC;
+    sprite->y = 0x003C;
+    sprite->ID = 0;
+    sprite->Index = 0x03;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0160;
+    Set_SPRITE ( 7, SPRITE_OBJ06 );
+    sprite = SPRITE_OBJ07;
+    sprite->x = 0x00EC;
+    sprite->y = 0x003C;
+    sprite->ID = 0;
+    sprite->Index = 0x23;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0170;
+    Set_SPRITE ( 8, SPRITE_OBJ07 );
+    sprite = SPRITE_OBJ08;
+    sprite->x = 0x012C;
+    sprite->y = 0x003C;
+    sprite->ID = 0;
+    sprite->Index = 0x23;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0180;
+    Set_SPRITE ( 9, SPRITE_OBJ08 );
+    sprite = SPRITE_OBJ09;
+    sprite->x = 0x008C;
+    sprite->y = 0x002C;
+    sprite->ID = 0;
+    sprite->Index = 0x21;
+    sprite->time = 0x0080;
+    sprite->action = 0;
+    sprite->action1 = 0;
+    sprite->speed = 0x0190;
+    Set_SPRITE ( 10, SPRITE_OBJ09 );
+    return;
+}
+//=============================================================================================================================================================================================================================:
+void testfunction1 ( void )
+{
+    SPRITE_STRUCT *sprite;
+    sprite = SPRITE_OBJ00;
+    sprite->x += 0x0004;
+    Set_SPRITE ( 1, SPRITE_OBJ00 );
+    Set_SPRITE ( 2, SPRITE_OBJ01 );
+    Set_SPRITE ( 3, SPRITE_OBJ02 );
+    Set_SPRITE ( 4, SPRITE_OBJ03 );
+    Set_SPRITE ( 5, SPRITE_OBJ04 );
+    Set_SPRITE ( 6, SPRITE_OBJ05 );
+    Set_SPRITE ( 7, SPRITE_OBJ06 );
+    Set_SPRITE ( 8, SPRITE_OBJ07 );
+    Set_SPRITE ( 9, SPRITE_OBJ08 );
+    Set_SPRITE ( 10, SPRITE_OBJ09 );
+    return;
+}
+//=============================================================================================================================================================================================================================:
+void testfunction2 ( void )
+{
+    return;
+}
+//=============================================================================================================================================================================================================================:

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="68K" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/68K" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/68K" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="src/include/common/draw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/include/common/draw.h" />
+		<Unit filename="src/include/common/math.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/include/common/math.h" />
+		<Unit filename="src/include/common/menu.h" />
+		<Unit filename="src/include/common/string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/include/common/string.h" />
+		<Unit filename="src/include/common/type.h" />
+		<Unit filename="src/include/common/typef.h" />
+		<Unit filename="src/include/cps1/cps1.h" />
+		<Unit filename="src/include/cps1/port.h" />
+		<Unit filename="src/include/cps1/text.h" />
+		<Unit filename="src/include/xxpacth_include.h" />
+		<Unit filename="src/proj/dino/c/menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/proj/dino/c/menu.h" />
+		<Unit filename="src/proj/dino/c/test1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
