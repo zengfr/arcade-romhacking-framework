@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/zengfr/Desktop/c/test/src/include/xxpacth_include.h
+
+C:/Users/zengfr/Desktop/c/test/src/proj/punisher/patch.S
+../../include/xxpacth_include.h
+C:/Users/zengfr/Desktop/c/test/src/include/xxpacth_include.h
+

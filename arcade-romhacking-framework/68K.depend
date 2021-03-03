@@ -1,0 +1,77 @@
+# depslib dependency file v1.0
+1586878887 source:c:\users\zengfr\desktop\c\test\src\game\dino\menu.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"../../include/common/type.h"
+	"../../include/common/type2.h"
+	"../../include/common/menu.h"
+	"menu.h"
+
+1586772448 c:\users\zengfr\desktop\c\test\src\include\common\type.h
+	<stdint.h>
+
+1587221986 c:\users\zengfr\desktop\c\test\src\include\common\type2.h
+	<stdint.h>
+
+1587656438 c:\users\zengfr\desktop\c\test\src\include\common\menu.h
+
+1587217493 c:\users\zengfr\desktop\c\test\src\game\dino\menu.h
+
+1587478744 source:c:\users\zengfr\desktop\c\test\src\game\dino\test1.c
+	"../../include/common/typef.h"
+	"../../include/common/math.h"
+	"../../include/common/draw.h"
+	"../../include/cps1/port.h"
+	"../../include/cps1/text.h"
+
+1586852324 c:\users\zengfr\desktop\c\test\src\include\common\math.h
+
+1587657566 c:\users\zengfr\desktop\c\test\src\include\common\draw.h
+	"../common/typef.h"
+	"../common/math.h"
+	"../cps1/text.h"
+
+1587391542 c:\users\zengfr\desktop\c\test\src\include\cps1\text.h
+	<stdint.h>
+
+1587221707 c:\users\zengfr\desktop\c\test\src\include\cps1\port.h
+	<stdint.h>
+
+1587658308 source:c:\users\zengfr\desktop\c\test\src\include\common\draw.c
+	"../common/type.h"
+	"../common/typef.h"
+	"../common/math.h"
+	"../cps1/port.h"
+	"../cps1/text.h"
+	"../common/draw.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1587389195 source:c:\users\zengfr\desktop\c\test\src\include\common\math.c
+
+1587219010 source:c:\users\zengfr\desktop\c\test\src\include\common\string.c
+
+1587657184 c:\users\zengfr\desktop\c\test\src\include\common\typef.h
+	<stdint.h>
+
+1587656471 source:c:\users\zengfr\desktop\c\test\src\proj\dino\c\menu.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"../../../include/common/type.h"
+	"../../../include/common/typef.h"
+	"../../../include/common/menu.h"
+	"menu.h"
+
+1587478908 c:\users\zengfr\desktop\c\test\src\proj\dino\c\menu.h
+
+1587658370 source:c:\users\zengfr\desktop\c\test\src\proj\dino\c\test1.c
+	"../../../include/common/type.h"
+	"../../../include/common/typef.h"
+	"../../../include/common/math.h"
+	"../../../include/common/draw.h"
+	"../../../include/cps1/port.h"
+	"../../../include/cps1/text.h"
+

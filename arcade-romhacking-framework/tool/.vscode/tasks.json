@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "task g++ exe",    //修改此项
+            "command": "D:\\SysGCC\\mingw32\\bin\\g++.exe",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-static-libgcc",
+                "-static-libstdc++"//,
+               // "-lstdc++",
+               //"-lpthread"
+               //,"-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
+            ],
+            "options": {
+                "cwd": "D:\\SysGCC\\mingw32\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        }, {
+            "type": "shell",
+            "label": "task g++ dll",    //修改此项
+            "command": "D:\\SysGCC\\mingw64\\bin\\g++.exe",
+            "args": ["-shared",
+                "-g","${file}",
+                "-m64",
+                "-o","${fileDirname}\\${fileBasenameNoExtension}.dll",
+                
+                "-static-libgcc",
+                "-static-libstdc++"//,
+               // "-lstdc++",
+               //"-lpthread"
+               //,"-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
+              
+            ],
+            "options": {
+                "cwd": "D:\\SysGCC\\mingw64\\bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+C:/Users/zengfr/Desktop/c/test/make/punisher/build/CMakeFiles/generate_patch.dir
+C:/Users/zengfr/Desktop/c/test/make/punisher/build/CMakeFiles/game.dir
+C:/Users/zengfr/Desktop/c/test/make/punisher/build/CMakeFiles/edit_cache.dir
+C:/Users/zengfr/Desktop/c/test/make/punisher/build/CMakeFiles/rebuild_cache.dir
